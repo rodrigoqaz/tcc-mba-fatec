@@ -37,3 +37,15 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Arquivos Auxiliares do Latex
+*/out/*.aux
+*/out/*.bbl
+*/out/*.blg
+*/out/*.fdb_latexmk
+*/out/*.fls 
+*/out/*.log
+*/out/*.synctex.gz
+
+*.DS_Store
+*.Rproj
