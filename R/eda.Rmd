@@ -178,11 +178,9 @@ dataset %>%
   ggplot(aes(x = day, y = Last)) +
     geom_line() +
     labs(
-      title = "Evolução do preço de fechamento do Bitcoin", 
       y     = "Preço de Fechamento", 
-      x     = ""
-    ) +
-    theme_tq()
+      x     = "Dia"
+    ) 
 
 ```
 

@@ -268,7 +268,8 @@ treinamento, a RNA "aprende" ajustando-se os pesos \cite{bishop1996neural}.
 \begin{figure}[ht]
   \centering
   \includegraphics[scale=0.6]{img/nnet.png}
-  \caption{Exemplo de uma Rede Neural Artificial de 2 camadas com 4 entradas e 2 saídas}
+  \caption{Exemplo de uma Rede Neural Artificial de 2 camadas com 4 
+  entradas e 2 saídas}
   Fonte: https://cerebromente.org.br/n05/tecnologia/rna.htm, \\consulta em 02 de 
   outubro de 2020
   \label{fig:nnet}
@@ -292,15 +293,80 @@ Colocar random forest ou regressão?
 
 \section{Discussão dos resultados}
 
-Na tabela 
-\ref{summary} é possível verificar algumas estatísticas acerca do conjunto de 
-dados.
+A proposta deste artigo é a criação de um modelo que consiga entender o
+comportamento do preço do Bitcoin e fazer projeções para auxiliar a tomada de
+decisões de compra e venda, com o intuito de otimizar os resultados dos 
+\textit{trades}.
+
+O primeiro passo para o desenvolvimento deste modelo foi a coleta de dados, 
+através da API da corretora \textit{Bitfinex}, e que armazenava o preço do 
+Bitcoin, entre outras informações, a cada dez segundos.
+
+Na tabela \ref{summary} é possível verificar algumas estatísticas acerca do 
+conjunto de dados.
 
 \input{tabela1.tex}
 
+Apresenta-se na Figura \ref{fig:data-hist} abaixo, a variação do preço do 
+Bitcoin, desde o início da coleta dos dados até o momento da elaboração deste 
+estudo. Pode-se perceber que no final do ano de 2018, o preço do Bitcoin atingiu 
+seu pico máximo, chegando a quase 20 mil dólares. Após um longo período de 
+queda, no primeiro semestre do ano de 2019, o preço aumentou consideravelmente, 
+chegando a cerca de 13 mil dólares.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale = 0.8]{img/data-hist.png}
+  \caption{Evolução do preço do Bitcoin, extraído da API da \textit{Bitfinex}}
+  Fonte: Dados do estudo
+  \label{fig:data-hist}
+\end{figure}
+
+Outro ponto relevante que se observa, é um grande gap entre os meses de 
+abril e outubro de 2020. Esse fato se deu, por problemas na aplicação que 
+consome os dados. Por isso, serão descartados os registros superiores ao mês 
+de abril/2020.
+
+O próximo passo foi fazer uma análise das informações que foram coletadas. 
+Durante o processo de estruturação do programa que iria fazer a coleta dos 
+dados, observou-se que as vezes a API apresentava oscilações de performance, 
+ou seja, demorando muitopara retornar o resultado da solicitação.
+
+Verificou-se então a diferença entre cada período coletado. Verifica-se,
+Tabela \ref{lag} que existem sete registros com diferença superior a um dia. 
+
+\clearpage  % Este comando usar com sabedoria você deve, Padawn!
+\input{tabela2.tex}
+
+Essa primeira análise, subsidiou a decisão de que, apesar dos dados serem 
+coletados a cada dez segundos, o modelo confeccionado analisará o período de 
+um dia, ou seja, o modelo irá projetar, com base nas informações atuais, 
+o preço do bitcoin no práximo dia.
+
+Com isso, o terceiro passo adotado foi filtrar os dados, obedecendo o período 
+de um dia. Com isso, o gráfico do preço histório ficou Figura \ref{fig:dataset}
+abaixo.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[scale = 0.8]{img/dataset.png}
+  \caption{Evolução do preço do Bitcoin, após filtros}
+  Fonte: Dados do estudo
+  \label{fig:dataset}
+\end{figure}
+
+
+Após, prosseguiu-se com o treinamento do modelo. Utilizou-se com base de
+treinamento o período compreendido entre 01/01/2018 e 31/07/2018. 
+Normalizou-se as variáveis para todas ficarem compreendidas no intervalo entre 
+zero e um. 
+
+Estruturou-se a rede neural com a seguinte configuração:
+
+
 \section{Considerações finais}
 
-The subsection titles must be in boldface, 12pt, flush left.
+The subsection t-
 
 \section{Referências}
 

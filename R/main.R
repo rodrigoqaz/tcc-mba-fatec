@@ -68,3 +68,75 @@ data %>%
 
 
 
+# Grafico histórico ----
+
+spotlights <- Spotlights(data)
+
+p <- data %>% 
+  ggplot(aes(x=datetime, y = Last)) + 
+  geom_line() +
+  labs(
+    x = "Tempo",
+    y = "Preço em Dólar (USD)"
+  ) + 
+  geom_label_repel(
+    data = spotlights,
+    mapping = aes(
+      x = datetime, 
+      y = Last, 
+      label = formatC(Last, 2, format = "f"),
+      fill = origem), 
+    colour = "white"
+  ) +
+  geom_tile(alpha = 0) +
+  guides(
+    fill = guide_legend(
+      title = "",
+      override.aes = aes(label = "")
+    )
+  )
+
+png(file="template-artigo/img/data-hist.png",width=500,height=350)
+p
+dev.off()
+
+# Lag ----
+
+data %>% 
+  arrange(datetime) %>% 
+  mutate(
+    last_record = lag(datetime),
+    lag = hms::as.hms(difftime(datetime,last_record, units = "mins"))
+  ) %>% 
+  select(
+    `Data Final`   = datetime,
+    `Data Inicial` = last_record,
+    `Diferença`    = lag
+  ) %>% 
+  drop_na() %>% 
+  arrange(desc(`Diferença`)) %>% 
+  head(10) %>% 
+  stargazer(
+    type            = "latex", 
+    summary         = FALSE, 
+    out             = "template-artigo/tabela2.tex",
+    title           = " \\textit{Lag} entre os registros", 
+    font.size       = "small",
+    notes           = "Fonte: Dados do estudo",
+    label           = 'lag',
+    table.placement = "h"
+  )
+
+# Datset ----
+
+p2 <- dataset %>%
+  ggplot(aes(x = day, y = Last)) +
+  geom_line() +
+  labs(
+    y     = "Preço de Fechamento", 
+    x     = "Dia"
+  ) 
+
+png(file="template-artigo/img/dataset.png",width=500,height=350)
+p2
+dev.off()
