@@ -7,7 +7,7 @@
 
 config <- config::get(file = 'config.yml')
 
-connect_database <- function() {
+ConnectDatabase <- function() {
   
   os <- Sys.info()[1]
   

@@ -1,0 +1,189 @@
+---
+title: "Análise exploratória dos dados"
+author: "Rodrigo de Souza Oliveira"
+date: "22/09/2020"
+output:
+  html_document:
+    code_folding: hide
+    keep_md: false
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    number_sections: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(scales)
+library(ggrepel)
+library(tidyquant)  
+
+source('R/GetData.R')
+source('R/Spotligths.R')
+```
+
+# Importação dos dados
+
+Para importação dos dados, que estão  salvos em um banco de dados SQL Server,
+Hospedado na Azure, criou-se uma função, cuja chamada se dá pelo código abaixo.
+Detalhes da função, está no arquivo GetData.R na pasta R.
+
+```{r import_data}
+
+data <- GetData()
+
+data %>% 
+  head() %>% 
+  DT::datatable(options = list(scrollX = T))
+
+```
+
+# Análise exploratória
+
+Nesta seção iremos abordar sobre algumas análises exploratórias que serão
+utilizadas para a construção dos modelos.
+
+## Sumarização dos dados
+
+Podemos observar na variáveis datetime, que possuímos registros de informações 
+entre 22/11/2017 e 11/04/2020. Observando a variável Last, vemos que o preço,
+nesse conjunto de dados, oscilou entre 3278 e 19891.
+
+```{r summary, message=FALSE, warning=FALSE}
+
+data %>% 
+  summary() %>% 
+  as.data.frame() %>% 
+  separate(
+    col  = Freq,
+    into = c('key', 'value'), 
+    sep  = ":"
+  ) %>% 
+  drop_na() %>% 
+  pivot_wider(
+    names_from  = Var2,
+    values_from = value
+  ) %>% 
+  select(-Var1) %>% 
+  DT::datatable(options = list(scrollX = T))
+
+```
+
+
+## Preço histórico do Bitcoin
+
+Pode-se perceber que no final do ano de 2018, o preço do Bitcoin atingiu seu
+pico máximo, chegando a quase 20 mil dólares. Após um longo período de queda,
+no primeiro semestre do ano de 2019, o preço aumentou consideravelmente,
+chegando a cerca de 13 mil dólares.
+
+Outro ponto relevante que se observa, é um grande *gap* entre os meses de abril
+e outubro de 2020. Esse fato se deu, por problemas na aplicação que consome os
+dados. Por isso, serão descartados os registros superiores ao mês de abril/2020.
+
+```{r historical_price}
+
+spotlights <- Spotlights(data)
+
+data %>% 
+  ggplot(aes(x=datetime, y = Last)) + 
+    geom_line() +
+    labs(
+      x = "Tempo",
+      y = "Preço em Dólar (USD)"
+    ) + 
+  geom_label_repel(
+    data = spotlights,
+    mapping = aes(
+      x = datetime, 
+      y = Last, 
+      label = formatC(Last, 2, format = "f"),
+      fill = origem), 
+    colour = "white"
+  ) +
+  geom_tile(alpha = 0) +
+  guides(
+    fill = guide_legend(
+      title = "",
+      override.aes = aes(label = "")
+    )
+  )
+
+```
+
+## *Lag* entre os registros
+
+O próximo passo foi avaliar a distância entre as coletas. Inicialmente
+configurado para trazer registros a cada 10 segundos, observou-se que o prazo de
+resposta da API, as vezes era maior que isso. 
+
+Abaixo é possível observar esses valores de intervalos:
+
+
+```{r lag_between_prices}
+
+data %>% 
+  arrange(datetime) %>% 
+  mutate(
+    last_record = lag(datetime),
+    lag = difftime(datetime,last_record, units = "mins")
+  ) %>% 
+  select(
+    `Data Final`   = datetime,
+    `Data Inicial` = last_record,
+    `Diferença`    = lag
+  ) %>% 
+  drop_na() %>% 
+  arrange(desc(`Diferença`)) %>% 
+  head(10) %>% 
+  DT::datatable()
+
+```
+
+Verifica-se que existem nove registros com diferença superior a um dia.
+Portanto, como base de dados para o treinamento dos modelos, será considerado
+sempre o consolidado de cada dia.
+
+```{r make_dataset, message=FALSE, warning=FALSE}
+
+dataset <- data %>% 
+  mutate(day = lubridate::date(datetime)) %>% 
+  filter(day < '2020-04-01') %>% 
+  group_by(day) %>% 
+  summarise(
+    AIL     = min(AIL),
+    AQ1     = min(AQ1),
+    AMD     = median(AMD),
+    AQ3     = max(AQ3),
+    ASL     = max(ASL),
+    BIL     = min(BIL),
+    BQ1     = min(BQ1),
+    BMD     = median(BMD),
+    BQ3     = max(BQ3),
+    BSL     = max(BSL),
+    BAMOUNT = sum(BAMOUNT),
+    AAMOUNT = sum(AAMOUNT),
+    Bid     = last(Bid),
+    Ask     = last(Ask),
+    Open    = min(Last),
+    Last    = last(Last),
+    Low     = min(Low),
+    High    = max(High),
+    Volume  = sum(Volume)
+  )
+
+dataset %>%
+  ggplot(aes(x = day, y = Last)) +
+    geom_line() +
+    labs(
+      title = "Evolução do preço de fechamento do Bitcoin", 
+      y     = "Preço de Fechamento", 
+      x     = ""
+    ) +
+    theme_tq()
+
+```
+
+
