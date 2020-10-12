@@ -73,11 +73,11 @@ metrics <- validation %>%
 
 
 
-png(file="template-artigo/img/results_scatter.png",width=500,height=350)
+pdf(file="template-artigo/img/results_scatter.pdf", height = 3)
 p_scatter
 dev.off()
 
-png(file="template-artigo/img/results_line.png",width=500,height=350)
+pdf(file="template-artigo/img/results_line.pdf",height=3.5)
 p_line
 dev.off()
 

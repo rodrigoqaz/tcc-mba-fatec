@@ -4,9 +4,11 @@
 library(tidyverse)
 library(xtable)
 library(stargazer)
+library(ggrepel)
 source('R/MakeDataset.R')
 source('R/PreProcessData.R')
 source('R/LongTable.R')
+source('R/Spotligths.R')
 
 data <- GetData()
 
@@ -21,32 +23,32 @@ save(list = c("train", "test"), file = 'data/train-test.RData')
 
 # Tabela 1 ----
 
-data %>% 
-  ungroup() %>% 
-  select(-Currency, -Timestamp) %>% 
-  summary() %>% 
-  as.data.frame() %>% 
-  separate(
-    col  = Freq,
-    into = c('key', 'value'), 
-    sep  = ":"
-  ) %>% 
-  drop_na() %>% 
-  pivot_wider(
-    names_from  = key,
-    values_from = value
-  ) %>%
-  column_to_rownames('Var2') %>% 
-  select(-Var1) %>% 
-  longtable.stargazer(.,
-    type = "latex", 
-    summary = FALSE, 
-    filename = "template-artigo/tabela1.tex",
-    title = "Sumarização dos dados", 
-    font.size = "scriptsize",
-    notes = "Fonte: Dados do estudo",
-    label = 'summary'
-  )
+# data %>% 
+#   ungroup() %>% 
+#   select(-Currency, -Timestamp) %>% 
+#   summary() %>% 
+#   as.data.frame() %>% 
+#   separate(
+#     col  = Freq,
+#     into = c('key', 'value'), 
+#     sep  = ":"
+#   ) %>% 
+#   drop_na() %>% 
+#   pivot_wider(
+#     names_from  = key,
+#     values_from = value
+#   ) %>%
+#   column_to_rownames('Var2') %>% 
+#   select(-Var1) %>% 
+#   longtable.stargazer(.,
+#     type = "latex", 
+#     summary = FALSE, 
+#     filename = "template-artigo/tabela1.tex",
+#     title = "Sumarização dos dados", 
+#     font.size = "scriptsize",
+#     notes = "Fonte: Dados do estudo",
+#     label = 'summary'
+#   )
 
 
 
@@ -78,7 +80,7 @@ p <- data %>%
     )
   )
 
-png(file="template-artigo/img/data-hist.png",width=500,height=350)
+pdf(file="template-artigo/img/data-hist.pdf",height=3.5)
 p
 dev.off()
 
@@ -119,6 +121,6 @@ p2 <- dataset %>%
     x     = "Dia"
   ) 
 
-png(file="template-artigo/img/dataset.png",width=500,height=350)
+pdf(file="template-artigo/img/dataset.pdf",height=3.5)
 p2
 dev.off()
