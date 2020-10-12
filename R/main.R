@@ -4,38 +4,20 @@
 library(tidyverse)
 library(xtable)
 library(stargazer)
-source('R/GetData.R')
-
+source('R/MakeDataset.R')
+source('R/PreProcessData.R')
+source('R/LongTable.R')
 
 data <- GetData()
 
-dataset <- data %>% 
-  mutate(day = lubridate::date(datetime)) %>% 
-  filter(day < '2020-04-01') %>% 
-  group_by(day) %>% 
-  summarise(
-    AIL     = min(AIL),
-    AQ1     = min(AQ1),
-    AMD     = median(AMD),
-    AQ3     = max(AQ3),
-    ASL     = max(ASL),
-    BIL     = min(BIL),
-    BQ1     = min(BQ1),
-    BMD     = median(BMD),
-    BQ3     = max(BQ3),
-    BSL     = max(BSL),
-    BAMOUNT = sum(BAMOUNT),
-    AAMOUNT = sum(AAMOUNT),
-    Bid     = last(Bid),
-    Ask     = last(Ask),
-    Open    = min(Last),
-    Last    = last(Last),
-    Low     = min(Low),
-    High    = max(High),
-    Volume  = sum(Volume)
-  )
+dataset <- MakeDataset(data)
+train <- PreProcessData(dataset, '2020-01-01')$train
+test <- PreProcessData(dataset, '2020-01-01')$test
 
 save(dataset, file = 'data/dataset.RData')
+save(list = c("train", "test"), file = 'data/train-test.RData')
+
+
 
 # Tabela 1 ----
 
@@ -56,10 +38,10 @@ data %>%
   ) %>%
   column_to_rownames('Var2') %>% 
   select(-Var1) %>% 
-  stargazer(
+  longtable.stargazer(.,
     type = "latex", 
     summary = FALSE, 
-    out = "template-artigo/tabela1.tex",
+    filename = "template-artigo/tabela1.tex",
     title = "Sumarização dos dados", 
     font.size = "scriptsize",
     notes = "Fonte: Dados do estudo",

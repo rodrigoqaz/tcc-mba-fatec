@@ -2,6 +2,7 @@
 
 \usepackage{sbc-template}
 \usepackage{graphicx,url}
+\usepackage{longtable}
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
      
@@ -32,7 +33,22 @@
 \maketitle
 
 \begin{abstract}
-  Resumo em inglês aqui.
+With the evolution of technology and the creation of several tools for analysis of
+data, a subject that has become very relevant is the application of these
+advanced Machine Learning techniques to understand the behavior of assets
+and subsidize the financial information market for decision making. The objective 
+of this work was to apply Machine Learning models, with the goal of
+analyze and understand the behavior of bitcoin to forecast its future value
+and use it as a tool to assist in investment strategies.
+For this, data was collected on the bitcoin quotation through the API of
+a crypto exchange, in a historical series created since December 2017.
+The results show that the models were able to understand and
+forecast bitcoin price fluctuations, highlighting Multilayer
+Perceptron model. This work paved the way for a range of possibilities for
+future work to better understand model architectures available
+that can generalize the behavior of bitcoin over time and to the
+development of a tool that automates decision making to operate
+in the Bitcoin market automatically.
 \end{abstract}
      
 \begin{resumo} 
@@ -40,16 +56,18 @@ Com a evolução da tecnologia e a criação de diversas ferramentas de análise
 dados, um assunto que vem se tornando muito relevante é a aplicação dessas 
 técnicas avançadas de Machine Learning para entender o comportamento dos ativos 
 e subsidiar o mercado financeiro de informações para tomada de decisão. Este 
-trabalho teve como objetivo aplicar uma estrutura de rede neural artificial 
-LSTM, com a função de analisar e entender o comportamento do bitcoin para 
-projetar seu valor futuro e utilizá-lo como ferramenta para auxiliar nas 
-estratégiasde investimentos. Para isso, foram coletados dados sobre a cotação 
-do bitcoin, através da API de uma corretora, em uma série histórica criada desde
-dezembro de 2017. Os resultados evidenciam que o modelo foi capaz de entender e 
-projetar as oscilações do preço do bitcoin, porém superestimava o seu valor. 
-Este trabalho abriu caminho para uma gama de possibilidades de futuros trabalhos
-para melhor entender as arquiteturas de modelos disponíveis que consigam 
-generalizar o comportamento do bitcoin ao longo do tempo.
+trabalho teve como objetivo aplicar modelos de Machine Learning, com a função de
+analisar e entender o comportamento do bitcoin para projetar seu valor futuro 
+e utilizá-lo como ferramenta para auxiliar nas estratégiasde investimentos. 
+Para isso, foram coletados dados sobre a cotação do bitcoin, através da API de 
+uma corretora, em uma série histórica criada desde dezembro de 2017. 
+Os resultados evidenciam que os modelos foram capazes de entender e 
+projetar as oscilações do preço do bitcoin, com destaque para o Multilayer 
+Perceptron. Este trabalho abriu caminho para uma gama de possibilidades de 
+futuros trabalhos para melhor entender as arquiteturas de modelos disponíveis 
+que consigam generalizar o comportamento do bitcoin ao longo do tempo e o 
+desenvolvimento de ferramenta que automatiza a tomada de decisões para operar
+no mercado de Bitcoin de forma automática.
 \end{resumo}
 
 
@@ -176,13 +194,18 @@ algumas tratativas nos dados para se chegar ao \textit{dataset} final.
 
 \subsection{Modelos}
 
-Neste trabalho foram utilizados os modelos RandomForest e 
-\textit{Long-Short Term Memory} (LSTM), considerando como base de treinamento
+Neste trabalho foram utilizados os modelos de Regressão Linear Random Forest e 
+\textit{Multi Layer Perceptron} (MLP), considerando como base de treinamento
 os dados compreendidos entre novembro de 2017 até dezembro de 2019 e para 
 validação os dados entre janeiro e março de 2020.
 
-O modelo LSTM form treinado utilizando o pacote Keras \cite{chollet2015}, que 
+O modelo MLP form treinado utilizando o pacote Keras \cite{chollet2015}, que 
 cria uma camada para execução do ambiente Tensorflow \cite{tensorflow2015}.
+
+Os modelos de Regressão Linear e Random Forest, foram treinados através do
+framework \textit{Tidymodels} \cite{tidymodels}, ustilizando como motor de 
+treinamento os pacotes \textit{glmmet} \cite{glmnet} e \textit{randomForest} 
+\cite{randomforest}
 
 \section{Revisão de Literatura}
 
@@ -270,30 +293,81 @@ treinamento, a RNA "aprende" ajustando-se os pesos \cite{bishop1996neural}.
   \includegraphics[scale=0.6]{img/nnet.png}
   \caption{Exemplo de uma Rede Neural Artificial de 2 camadas com 4 
   entradas e 2 saídas}
-  Fonte: https://cerebromente.org.br/n05/tecnologia/rna.htm, \\consulta em 02 de 
-  outubro de 2020
+  Fonte: \url{https://cerebromente.org.br/n05/tecnologia/rna.htm}, 
+  \\consulta em 02 de outubro de 2020
   \label{fig:nnet}
 \end{figure}
 
-\subsubsection{Redes Neurais Recorrentes e \textit{Long Short-Term Memory}}
+\subsubsection{Multilayer Perceptron}
 
-A Rede Neural Recorrente (RNN), é uma arquitetura de rede neural especializada em
-processar dados sequenciais. RNNs também são capazes de lidar com sequências de
-tamanhos variados. Porém, existe uma limitação nesse tipo de rede, quando se trata
-em aprender dependências após vários estágios de processamento.
+A \textit{Multilayer Perceptron} (MLP), ou Perceptron de Múltiplas Camadas em tradução
+direta, é um tipo de Rede Neural artificial que possui mais de uma camada de 
+neurônios, interligados em alimentação direta. Uma introdução às Redes Neurais e
+Perceptrons pode ser vista em \cite{bailer2001introduction}, mais detalhes sobre
+a MLP em \cite{sarle1994neural} e sobre a alimentação direta em 
+\cite{bishop1995neural}.
 
-Diversas variações das RNNs foram criadas com o objetivo de amenizar este
-problema, sendo uma delas as células de Long Short Term Memory (LSTM). Tais
-células possuem “memória”, ou seja, conseguem guardar informações por longos
-períodos.
+A Figura \ref{fig:mlp} esquematiza uma MLP com duas camadas ocultas:
 
-\subsection{Random Forest}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.6]{img/multi_layer_perceptron.jpg}
+  \caption{
+    Exemplo de uma MLP com duas camadas ocultas
+  }
+  Fonte: \url{https://www.tutorialspoint.com/tensorflow/tensorflow_multi_layer_perceptron_learning.htm}, 
+  \\consulta em 02 de outubro de 2020
+  \label{fig:mlp}
+\end{figure}
 
-Colocar random forest ou regressão?
+\subsection{Regressão Linear Múltipla}
+
+Modelos de regressão linear, assumem que existem uma relação linear entre uma 
+variável $y$ (também chamada de variável dependente) e $p$ variáveis independentes
+(ou preditoras) \cite{rodrigues2012modelo}. O modelo de regressão linear múltipla é definido 
+conforme abaixo:
+
+\begin{equation}
+  y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + \cdots + \beta_px_{ip} + 
+  \varepsilon_i, i = 1, \cdots, n
+\end{equation}
+em que
+
+\begin{itemize}
+  \item $y_i$ é o valor da variável dependente na observação $i$, $i = 1, \cdots, n$;
+  \item $x_{ip}$ é o valor da $i$-ésima observação da $p$-ésima variável independente;
+  \item $\beta_p$ são os coeficientes da regressão;
+  \item $\varepsilon_i$ é o erro aleatório na $i$-ésima observação.
+\end{itemize}
+
+Os coeficientes $\beta_j$ representam a média esperada na 
+variável resposta $Y$, quando a variável $X_j$ sofre um acréscimo unitário, 
+enquanto todas as outras $X_k, k \neq j$ são mantidas constantes.
+
+O coeficiente $\beta_0$ corresponde ao intercepto do plano de regressão. Se o 
+modelo incluir $X_j = 0$, então $\beta_0$ será a média de $Y$ nesse ponto.
+Caso contrário, não existe interpretação prática para $\beta_0$
+
+
+\subsection{Random Forests}
+
+Os Random Forests (ou floresta aleatório em tradução direta) é um algoritmo de 
+aprendizado de máquina, proposto por \cite{breiman2001random}, que consiste na
+geração de diversas árvores de decisão, baseadas em seleções aleatórias e 
+variáveis. Após, é realizada uma "votação" entre os modelos e a decisão mais 
+votada é a resposta do algoritmo.
+
+É dado pelo modelo:
+
+\begin{equation}
+  h(\mathbf{x},\Theta_k), k = 1, \cdots, p
+\end{equation}
+em que $\Theta_k$ são vetores aleatórios $iid$ e cada árvore, vota para a classe
+mais popular da entrada $\mathbf{x}$.
 
 \section{Discussão dos resultados}
 
-A proposta deste artigo é a criação de um modelo que consiga entender o
+A proposta deste artigo é a criação de modelos que consiga entender o
 comportamento do preço do Bitcoin e fazer projeções para auxiliar a tomada de
 decisões de compra e venda, com o intuito de otimizar os resultados dos 
 \textit{trades}.
@@ -314,6 +388,7 @@ seu pico máximo, chegando a quase 20 mil dólares. Após um longo período de
 queda, no primeiro semestre do ano de 2019, o preço aumentou consideravelmente, 
 chegando a cerca de 13 mil dólares.
 
+
 \begin{figure}[ht]
   \centering
   \includegraphics[scale = 0.8]{img/data-hist.png}
@@ -321,6 +396,7 @@ chegando a cerca de 13 mil dólares.
   Fonte: Dados do estudo
   \label{fig:data-hist}
 \end{figure}
+
 
 Outro ponto relevante que se observa, é um grande gap entre os meses de 
 abril e outubro de 2020. Esse fato se deu, por problemas na aplicação que 
@@ -335,7 +411,7 @@ ou seja, demorando muitopara retornar o resultado da solicitação.
 Verificou-se então a diferença entre cada período coletado. Verifica-se,
 Tabela \ref{lag} que existem sete registros com diferença superior a um dia. 
 
-\clearpage  % Este comando usar com sabedoria você deve, Padawn!
+%\clearpage  % Este comando usar com sabedoria você deve, Padawn!
 \input{tabela2.tex}
 
 Essa primeira análise, subsidiou a decisão de que, apesar dos dados serem 
@@ -349,26 +425,98 @@ abaixo.
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[scale = 0.8]{img/dataset.png}
+  \includegraphics[scale = 0.7]{img/dataset.png}
   \caption{Evolução do preço do Bitcoin, após filtros}
   Fonte: Dados do estudo
   \label{fig:dataset}
 \end{figure}
 
 
-Após, prosseguiu-se com o treinamento do modelo. Utilizou-se com base de
-treinamento o período compreendido entre 01/01/2018 e 31/07/2018. 
-Normalizou-se as variáveis para todas ficarem compreendidas no intervalo entre 
-zero e um. 
+Após, prosseguiu-se com a geração das bases de treinamento e teste. Utilizou-se 
+como base de treinamento o período compreendido entre 01/11/2017 e 31/12/2019 e
+como base de testes o período entre 01/01/2020 a 31/03/2020. Normalizou-se as 
+variáveis para todas ficarem compreendidas no intervalo entre menos um e um. 
 
-Estruturou-se a rede neural com a seguinte configuração:
+Executou-se os modelos de Regressão (\textit{lr}) e \textit{Random Forests} 
+(\textit{rf}), removendo as variáveis autocorrelacionadas e para o MLP 
+(\textit{nn}), utilizou-se todas as variáveis na camada de entrada, considerando 
+16 camadas ocultas com 32 neurônios cada e 100 épocas para o treinamento.
 
+Na Figura \ref{fig:results_scatter} abaixo, é possível observar o comparativo
+entre o preço previsto (no eixo x) e o preço real (no eixo y), dos modelos 
+aplicados na base de testes. Para facilitar a interpretação, foi desenhada uma 
+linha tracejada vermelha, onde se lê que quanto mais próximos os pontos estiverem
+desta linha, mais preciso será o modelo.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[scale = 0.8]{img/results_scatter.png}
+  \caption{Evolução do preço do Bitcoin, após filtros}
+  Fonte: Dados do estudo
+  \label{fig:results_scatter}
+\end{figure}
+
+
+Na figura \ref{fig:results_line}, pode-se analisar os valores previstos (em vermelho)
+e reais (em azul) através do tempo. Detaca-se o modelo de Regressão Linear (lr)
+que não conseguir prever muito bem os valores em meados do mês de março, enquanto
+os modelos Random Forest (rf) e MLP (nn) conseguiram ser mais aderentes nas 
+previsões realizadas.
+
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[scale = 0.8]{img/results_line.png}
+  \caption{Evolução do preço do Bitcoin, após filtros}
+  Fonte: Dados do estudo
+  \label{fig:results_line}
+\end{figure}
+
+
+
+Já na tabela \ref{results}, são apresentadas as métricas \textit{Root Mean 
+Squared Error} (rmse), $R^{2}$ (rsq) e \textit{Mean Absolute Error} (mae). Para o 
+rmse e mae, quanto menor os valores observados, melhor o desenpenho do modelo e 
+para o $R^{2}$, quanto maior, melhor.
+
+Com isso, pode-se observar que, confirmando a tendência observada nas Figuras 
+\ref{fig:results_scatter} e \ref{fig:results_line}, o modelo de Regressão Linear
+Múltipla, apresentou a pior performance os três, quando o modelo \textit{Multilayer
+Perceptron}, apresentou ou melhores resultados.
+
+\input{tabela3.tex}
 
 \section{Considerações finais}
 
-The subsection t-
+O Objetivo deste trabalho foi implementar e testar modelos capazes de analisar 
+dados históricos das cotações do Bitcoin, para identificar o comportamento do 
+preço e projetar as cotações futuras.
 
-\section{Referências}
+Construiu-se então três modelos (Regressão Linear Múltipla, \textit{Random Forest}
+e \textit{Multilayer Perceptron}), para auxiliar na tomada de decisões e 
+estratégias de investimentos em Bitcoin. 
+
+Os resultados mostram que, o modelo \textit{Multilayer Perceptron} conseguiu se
+ajustar às variações do preço da moeda de forma mais eficiente que os demais, 
+tornando uma ferramenta viável para auxiliar na definição de estratégia de 
+investimento.
+
+Outro ponto a ser destacado é que, devido à variação do cenário econômico e outros
+quesitos que influenciam o mercado de cryptomoedas, a constante avaliação e
+otimização do modelo, com uso de novos dados, é indispensável para se mantenha
+uma ferramenta útil para tomada de decisões.
+
+É recomendável que, caso o valor do Bitcoin se estabilize nos próximos meses, um
+novo modelo deva ser construído para que se alcance melhores resultados, inclusive
+com a aplicação de outras técnicas. Este modelo deve ser abordado em estudos 
+futuros.
+
+Além disso, para que se coloque em prática o conhecimento gerado pelo modelo, é
+importante o desenvolvimento de uma ferramenta que automatize o processo de 
+tomada de decisões de compra e venda, com base nas projeções geradas pelo modelo.
+Esta ferramenta será confeccionada em estudos futuros.
+
+\clearpage
 
 \bibliographystyle{sbc}
 \bibliography{tcc-bib}
