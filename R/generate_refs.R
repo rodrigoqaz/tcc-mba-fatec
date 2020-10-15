@@ -114,3 +114,56 @@ p2 <- dataset %>%
 pdf(file="template-artigo/img/dataset.pdf",height=3.5)
 p2
 dev.off()
+
+
+
+
+# Tabela descritivo variáveis ----
+
+data %>% 
+  select(-Currency) %>% 
+  names() %>% 
+  tibble() %>% 
+  rename(`Variável` = '.') %>% 
+  mutate(
+    `Descrição` = c(
+      'Limite inferior dos preços de venda do livro de ofertas',
+      '1º Quartil dos preços de venda do livro de ofertas',
+      'Mediana Quartil dos preços de venda do livro de ofertas',
+      '3º Quartil dos preços de venda do livro de ofertas',
+      'Limite superior dos preços de venda do livro de ofertas',
+      'Limite inferior dos preços de compra do livro de ofertas',
+      '1º Quartil dos preços de compra do livro de ofertas',
+      'Mediana Quartil dos preços de compra do livro de ofertas',
+      '3º Quartil dos preços de compra do livro de ofertas',
+      'Limite superior dos preços de compra do livro de ofertas',
+      'Volume total das ofertas de compra',
+      'Volume total das ofertas de venda',
+      'Valor da última oferta de compra',
+      'Valor da última oferta de venda',
+      'Valor da última negociação realizada',
+      'Menor negociação realizada no timeframe',
+      'Maior negociação realizada no timeframe',
+      'Volume total das negociações realizadas',
+      'Momento da última negociação',
+      'Data e hora da última negociação'
+    )
+  ) %>% 
+  stargazer(
+    type            = "latex", 
+    summary         = FALSE, 
+    out             = "template-artigo/tabela_vars.tex",
+    title           = "Variáveis coletadas através da API", 
+    font.size       = "small",
+    notes           = "Fonte: Dados do estudo",
+    label           = 'vars',
+    table.placement = "h",
+    rownames        = FALSE
+  )
+
+
+
+
+
+
+

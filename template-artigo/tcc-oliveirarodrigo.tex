@@ -23,7 +23,7 @@
   Av. XV de Novembro, 303, Porto - CEP: 78020-300 - Cuiabá–MT
   \email{
     rddsouzaoliveira@gmail.com, 
-    emaildoalvaro@gmail.com
+    alvarowolfx@gmail.com
   }
 }
   
@@ -33,41 +33,16 @@
 \maketitle
 
 \begin{abstract}
-With the evolution of technology and the creation of several tools for analysis of
-data, a subject that has become very relevant is the application of these
-advanced Machine Learning techniques to understand the behavior of assets
-and subsidize the financial information market for decision making. The objective 
-of this work was to apply Machine Learning models, with the goal of
-analyze and understand the behavior of bitcoin to forecast its future value
-and use it as a tool to assist in investment strategies.
-For this, data was collected on the bitcoin quotation through the API of
-a crypto exchange, in a historical series created since December 2017.
-The results show that the models were able to understand and
-forecast bitcoin price fluctuations, highlighting Multilayer
-Perceptron model. This work paved the way for a range of possibilities for
-future work to better understand model architectures available
-that can generalize the behavior of bitcoin over time and to the
-development of a tool that automates decision making to operate
-in the Bitcoin market automatically.
+With the evolution of technology and the growth of the Data Science field, a subject that has become very relevant is the application of advanced Machine Learning techniques to understand assets behavior and support the decision-making process on the financial market. 
+The objective of this work is to apply Machine Learning models, to analyze and understand bitcoin’s behavior to forecast its future value and use it as a tool to assist in investment strategies.
+To achieve that goal, a dataset of Bitcoin quotation data was created by collecting historical data using a crypto exchange API, containing data starting in December 2017.
+The models developed in this article were able to understand and forecast Bitcoin price fluctuations, with a highlight to the Multilayer Perceptron model. This work paved the way for a range of possibilities for future work to better understand model architectures available that can generalize the behavior of Bitcoin over time and to the development of other tools that can automate decision-making operation on the Bitcoin market.
 \end{abstract}
      
 \begin{resumo} 
-Com a evolução da tecnologia e a criação de diversas ferramentas de análise de
-dados, um assunto que vem se tornando muito relevante é a aplicação dessas 
-técnicas avançadas de Machine Learning para entender o comportamento dos ativos 
-e subsidiar o mercado financeiro de informações para tomada de decisão. Este 
-trabalho teve como objetivo aplicar modelos de Machine Learning, com a função de
-analisar e entender o comportamento do bitcoin para projetar seu valor futuro 
-e utilizá-lo como ferramenta para auxiliar nas estratégiasde investimentos. 
-Para isso, foram coletados dados sobre a cotação do bitcoin, através da API de 
-uma corretora, em uma série histórica criada desde dezembro de 2017. 
-Os resultados evidenciam que os modelos foram capazes de entender e 
-projetar as oscilações do preço do bitcoin, com destaque para o Multilayer 
-Perceptron. Este trabalho abriu caminho para uma gama de possibilidades de 
-futuros trabalhos para melhor entender as arquiteturas de modelos disponíveis 
-que consigam generalizar o comportamento do bitcoin ao longo do tempo e o 
-desenvolvimento de ferramenta que automatiza a tomada de decisões para operar
-no mercado de Bitcoin de forma automática.
+Com a evolução da tecnologia e o crescimento da área de Ciência de Dados, um assunto que se tornou muito relevante é a aplicação de técnicas avançadas de Aprendizado de Máquina para entender o comportamento dos ativos e apoiar o processo de tomada de decisão no mercado financeiro. O objetivo deste trabalho é aplicar modelos de Aprendizado de Máquina, analisar e compreender o comportamento do Bitcoin para prever seu valor futuro e usá-lo como uma ferramenta para auxiliar nas estratégias de investimento.
+Para atingir esse objetivo, um conjunto de dados de cotação de Bitcoin foi criado por meio da coleta de dados históricos usando uma API de uma corretora, contendo dados a partir de dezembro de 2017.
+Os modelos desenvolvidos neste artigo foram capazes de entender e prever as oscilações dos preços do Bitcoin, com destaque para o modelo Multilayer Perceptron. Este trabalho abre caminho para uma gama de possibilidades de trabalhos futuros para melhor compreender as arquiteturas de modelos disponíveis que podem generalizar o comportamento do Bitcoin ao longo do tempo e para o desenvolvimento de outras ferramentas que podem automatizar a operação de tomada de decisão no mercado de Bitcoin.
 \end{resumo}
 
 
@@ -75,7 +50,7 @@ no mercado de Bitcoin de forma automática.
 
 Investimento é a aplicação de algum recurso, com a expectativa de algum gannho 
 futuro. A incerteza do ganho, ou um possível prejuízo, caracteria o risco do
-investimeto. No contexto de aplicação financeira, pode-se caracterizar o 
+investimento. No contexto de aplicação financeira, pode-se caracterizar o 
 investimento como a aplicação de dinheiro que não gere custos, tenha expectativa
 de lucro futuro e que não exija esforços relevantes \footnote{Detalhes em Blog 
 Rico. O Que é Investimento e Por Que Poupança é Ruim. Recuperado em 3 de
@@ -102,7 +77,7 @@ análise de dados. Estas ferramentas podem contribuir para transformar o bitcoin
 como uma alternativa de investimento, pois, através do entendimento de seu 
 comportamento, possibilitam a minimização dos riscos das operações com a moeda.
 
-O Objetivo deste trabalho foi implementar e testar modelos capazes de analisar
+O Objetivo deste trabalho é a implementação e teste de modelos capazes de analisar
 dados históricos das cotações do Bitcoin, para identificar o comportamento do 
 preço do Bitcoin e projetar as cotações futuras.
 
@@ -116,12 +91,11 @@ técnicas extremamente avançadas para análise de dados com a finalidade de pre
 o valor futuro do ativo, que é um dos grandes desafios dos cientistas de dados.
 
 A estrutura deste trabalho está organizada da seguinte forma: 
-A Metodologia (Capítulo2), onde será abordado os principais passos para 
+A Metodologia (Capítulo2), onde são abordados os principais passos para 
 coleta de dados, análise exploratória e o desenvolvimento do modelo, A Revisão 
-de Literatura (Capítulo 3), onde serão apresentados os conceitos acerca do 
+de Literatura (Capítulo 3), onde são apresentados os conceitos acerca do 
 Bitcoin, Machine Learning e sobre as Redes Neurais Artificiais, A Apresentação 
-da Pesquisa (Capítulo 4) e Discussão de Resultados (Capítulo 5), onde abordará 
-sobre os resultados obtidos em cada etapa do desenvolvimento do modelo e o 
+da Pesquisa (Capítulo 4) e Discussão de Resultados (Capítulo 5), onde é abordado os resultados obtidos em cada etapa do desenvolvimento do modelo e o 
 resultado da previsão realizada e por último, as Considerações Finais 
 (Capítulo 6), onde se conclui sobre as aplicações do modelo e recomendações de 
 futuros estudos.
@@ -183,6 +157,13 @@ compra, quanto das ordens de venda:
   \item Máximo
 \end{itemize}
 
+Ao final, o conjunto de dados ficou com as variáveis apresentadas na Tabela 
+\ref{vars}. A variável \textit{Last} será a variável resposta dos modelos, 
+ou seja, a variável que iremos tentar estimar através do modelos a serem
+desenvolvidos.
+
+\input{{tabela_vars.tex}}
+
 \subsection{Análise exploratória}
 
 Com os dados já estruturados e armazenados num banco de dados, o próximo passo
@@ -194,7 +175,7 @@ algumas tratativas nos dados para se chegar ao \textit{dataset} final.
 
 \subsection{Modelos}
 
-Neste trabalho foram utilizados os modelos de Regressão Linear Random Forest e 
+Neste trabalho foram utilizados os modelos de Regressão Linear, Random Forest e 
 \textit{Multi Layer Perceptron} (MLP), considerando como base de treinamento
 os dados compreendidos entre novembro de 2017 até dezembro de 2019 e para 
 validação os dados entre janeiro e março de 2020.
@@ -203,7 +184,7 @@ O modelo MLP form treinado utilizando o pacote Keras \cite{chollet2015}, que
 cria uma camada para execução do ambiente Tensorflow \cite{tensorflow2015}.
 
 Os modelos de Regressão Linear e Random Forest, foram treinados através do
-framework \textit{Tidymodels} \cite{tidymodels}, ustilizando como motor de 
+framework \textit{Tidymodels} \cite{tidymodels}, utilizando como motor de 
 treinamento os pacotes \textit{glmmet} \cite{glmnet} e \textit{randomForest} 
 \cite{randomforest}
 
@@ -274,13 +255,13 @@ forma como a estrutura do cérebro dos mamíferos processa informação
 
 As unidades de processamento, também chamadas de nós ou neurônios, são
 dispostas em uma ou várias camadas e interligadas por conexões. 
-As conexões estãoligadas a pesos, que ponderam os valores recebidos por cada 
+As conexões estão ligadas a pesos, que ponderam os valores recebidos por cada 
 neurônio.
 
 O conhecimento sobre o problema em consideração está guardado dentro dos
 exemplos que têm que estar obrigatoriamente disponíveis. O algoritmo de
 aprendizagem generaliza esses dados e memoriza o conhecimento dentro dos
-parâmetros adaptáveis da rede, os pesos \cite{rauber2005redes}.
+parâmetros adaptáveis da rede, que são os pesos \cite{rauber2005redes}.
 
 A camada que recebe os dados é chamada de camada de entrada, a camada de saída
 é responsável por traduzir o resultado da RNA e quaisquer outras são denominadas 
@@ -438,9 +419,17 @@ como base de testes o período entre 01/01/2020 a 31/03/2020. Normalizou-se as
 variáveis para todas ficarem compreendidas no intervalo entre menos um e um. 
 
 Executou-se os modelos de Regressão (\textit{lr}) e \textit{Random Forests} 
-(\textit{rf}), removendo as variáveis autocorrelacionadas e para o MLP 
-(\textit{nn}), utilizou-se todas as variáveis na camada de entrada, considerando 
-16 camadas ocultas com 32 neurônios cada e 100 épocas para o treinamento.
+(\textit{rf}), removendo as variáveis autocorrelacionadas. Neste passo, utilizou-se 
+o método \textit{step\_corr} do pacote \textit{recipes} \cite{recipes},
+que tem como finalidade remover variáveis que possuem correlações com outras variáveis,
+maiores que 0,9.
+
+Para o MLP (\textit{nn}), utilizou-se todas as variáveis na camada de entrada, 
+considerando 16 camadas ocultas com 32 neurônios cada e 100 épocas para o 
+treinamento.
+
+Nos três modelos, a variável resposta (ou variável-alvo) foi o \textit{Last}, 
+ou seja, o último valor obtido no dia.
 
 Na Figura \ref{fig:results_scatter} abaixo, é possível observar o comparativo
 entre o preço previsto (no eixo x) e o preço real (no eixo y), dos modelos 
@@ -456,13 +445,16 @@ desta linha, mais preciso será o modelo.
   \label{fig:results_scatter}
 \end{figure}
 
+Detaca-se um ponto discrepante (à esquerda da linha tracejada), em todos os modelos.
+Isso indica, que neste ponto específico, os modelos não conseguiram estimar de forma
+precisa o preço.
+
 
 Na figura \ref{fig:results_line}, pode-se analisar os valores previstos (em vermelho)
 e reais (em azul) através do tempo. Detaca-se o modelo de Regressão Linear (lr)
 que não conseguir prever muito bem os valores em meados do mês de março, enquanto
 os modelos Random Forest (rf) e MLP (nn) conseguiram ser mais aderentes nas 
 previsões realizadas.
-
 
 \begin{figure}[!ht]
   \centering
@@ -472,12 +464,13 @@ previsões realizadas.
   \label{fig:results_line}
 \end{figure}
 
-
-
 Já na tabela \ref{results}, são apresentadas as métricas \textit{Root Mean 
 Squared Error} (rmse), $R^{2}$ (rsq) e \textit{Mean Absolute Error} (mae). Para o 
-rmse e mae, quanto menor os valores observados, melhor o desenpenho do modelo e 
-para o $R^{2}$, quanto maior, melhor.
+rmse e mae, quanto menor os valores observados, ou seja, menor os erros 
+observados (diferença entre os valores estimados e reais), melhor o desempenho
+do modelo. Para o $R^{2}$, que é o coeficiente de determinação do modelo, que 
+traz o quanto da variação total dos dados é efetivamente explicada pelo modelo, 
+quanto maior os valores, melhor o desempenho do modelo.
 
 Com isso, pode-se observar que, confirmando a tendência observada nas Figuras 
 \ref{fig:results_scatter} e \ref{fig:results_line}, o modelo de Regressão Linear
@@ -498,7 +491,7 @@ estratégias de investimentos em Bitcoin.
 
 Os resultados mostram que, o modelo \textit{Multilayer Perceptron} conseguiu se
 ajustar às variações do preço da moeda de forma mais eficiente que os demais, 
-tornando uma ferramenta viável para auxiliar na definição de estratégia de 
+o tornando em uma ferramenta viável para auxiliar na definição de estratégia de 
 investimento.
 
 Outro ponto a ser destacado é que, devido à variação do cenário econômico e outros
