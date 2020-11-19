@@ -166,4 +166,8 @@ data %>%
 
 
 
+# Tabela com descritivo das variáveis;
+# Explicação das variáveis 
+
+
 

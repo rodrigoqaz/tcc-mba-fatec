@@ -102,94 +102,6 @@ resultado da previsão realizada e por último, as Considerações Finais
 (Capítulo 6), onde se conclui sobre as aplicações do modelo e recomendações de 
 futuros estudos.
 
-
-\section{Metodologia} \label{sec:firstpage}
-
-A finalidade dessa pesquisa tem natureza aplicada e abordagem qualitativa e 
-quantitativa para realizar estudo de caráter descritivo.
-
-Foi realizado um levantamento bibliográfico sobre os temas abordados neste 
-artigo, através da coleta de informações em livros, revistas, sites e outros 
-artigos.
-
-Para a coleta e análise dos dados utilizou-se um Macbook Pro 2018 com memória 
-RAM de 16GB, processador Intel i7 de 2.2Ghz, vídeo Radeon Pro 555x de 4Gb e um
-Flash Storage de 251Gb, além de sistema operacional MacOS Catalina, com acesso
-à internet.
-
-Utilizou-se como linguagem de programação o R \cite{r:2020} para todas as etapas 
-de análises apresentadas neste artigo e o Latex \cite{goossens93} para escrita. 
-Como banco de dados, utilizou-se o Microsoft SQL Server, hospedado na nuvem 
-Azure.
-
-\subsection{Coleta dos dados}
-
-A coleta dos dados se iniciou em dezembro de 2017, através da API REST da 
-corretora de cyptomoedas Bitfinex. Estruturou-se uma rotina em linguagem R, 
-dentro de uma máquina virtual no ambiente Google Cloud Plataform (GCP), 
-que acessava a API e armazenava os dados em um banco de dados SQL Server, 
-num período de 10 em 10 segundos.
-
-A rotina, consultava dois grupos de informações, fornecidos pela API: 
-"\textit{Ticker}" e \textit{"Orderbook"}. 
-O primeiro grupo, trazia informações sobre a cotação no momento da consulta e 
-trazia os seguintes campos:
-
-\begin{itemize}
-  \item Valor atual de venda
-  \item Valor atual de compra
-  \item Último valor negociado
-  \item Menor valor negociado das últimas 24h
-  \item Maior valor negociado nas últimas 24h
-  \item Volume total negociado nas últimas 24h
-\end{itemize}
-
-O segundo grupo, trazia o "livro de ordens", que era a listagem de todas as 
-ordens de compra e venda na corretora, vigentes no momento da consulta. 
-Essa consulta retornava milhares de linhas e para reduzir o espaço de 
-armazenamento, optou-se por resumir as informações antes de salvar no banco de 
-dados. Os dados resumidos traziam as seguintes informações tanto das ordens de 
-compra, quanto das ordens de venda:
-
-\begin{itemize}
-  \item Mínimo
-  \item 1o Quartil
-  \item Mediana
-  \item 3o Quartil
-  \item Máximo
-\end{itemize}
-
-Ao final, o conjunto de dados ficou com as variáveis apresentadas na Tabela 
-\ref{vars}. A variável \textit{Last} será a variável resposta dos modelos, 
-ou seja, a variável que iremos tentar estimar através do modelos a serem
-desenvolvidos.
-
-\input{{tabela_vars.tex}}
-
-\subsection{Análise exploratória}
-
-Com os dados já estruturados e armazenados num banco de dados, o próximo passo
-foi realizar uma análise exploratória no conjunto de dados. 
-
-Como o tempo de resposta da API pode variar, analisou-se os intervalos entre 
-cada consulta efetivamente realizada. Após essa análise, foram realizadas 
-algumas tratativas nos dados para se chegar ao \textit{dataset} final.
-
-\subsection{Modelos}
-
-Neste trabalho foram utilizados os modelos de Regressão Linear, Random Forest e 
-\textit{Multi Layer Perceptron} (MLP), considerando como base de treinamento
-os dados compreendidos entre novembro de 2017 até dezembro de 2019 e para 
-validação os dados entre janeiro e março de 2020.
-
-O modelo MLP form treinado utilizando o pacote Keras \cite{chollet2015}, que 
-cria uma camada para execução do ambiente Tensorflow \cite{tensorflow2015}.
-
-Os modelos de Regressão Linear e Random Forest, foram treinados através do
-framework \textit{Tidymodels} \cite{tidymodels}, utilizando como motor de 
-treinamento os pacotes \textit{glmmet} \cite{glmnet} e \textit{randomForest} 
-\cite{randomforest}
-
 \section{Revisão de Literatura}
 
 Neste tópico serão apresentados os principais conceitos abordados no estudo,
@@ -347,6 +259,98 @@ votada é a resposta do algoritmo.
 \end{equation}
 em que $\Theta_k$ são vetores aleatórios $iid$ e cada árvore, vota para a classe
 mais popular da entrada $\mathbf{x}$.
+
+
+\section{Metodologia} \label{sec:firstpage}
+
+A finalidade dessa pesquisa tem natureza aplicada e abordagem qualitativa e 
+quantitativa para realizar estudo de caráter descritivo.
+
+Foi realizado um levantamento bibliográfico sobre os temas abordados neste 
+artigo, através da coleta de informações em livros, revistas, sites e outros 
+artigos.
+
+Para a coleta e análise dos dados utilizou-se um Macbook Pro 2018 com memória 
+RAM de 16GB, processador Intel i7 de 2.2Ghz, vídeo Radeon Pro 555x de 4Gb e um
+Flash Storage de 251Gb, além de sistema operacional MacOS Catalina, com acesso
+à internet.
+
+Utilizou-se como linguagem de programação o R \cite{r:2020} para todas as etapas 
+de análises apresentadas neste artigo e o Latex \cite{goossens93} para escrita. 
+Como banco de dados, utilizou-se o Microsoft SQL Server, hospedado na nuvem 
+Azure.
+
+Todos os códigos utilizados neste trabalho estão disponíveis no Github, através
+do link  \url{https://github.com/rodrigoqaz/tcc-mba-fatec}.
+
+\subsection{Coleta dos dados}
+
+A coleta dos dados se iniciou em dezembro de 2017, através da API REST da 
+corretora de cyptomoedas Bitfinex. Estruturou-se uma rotina em linguagem R, 
+dentro de uma máquina virtual no ambiente Google Cloud Plataform (GCP), 
+que acessava a API e armazenava os dados em um banco de dados SQL Server, 
+num período de 10 em 10 segundos.
+
+A rotina, consultava dois grupos de informações, fornecidos pela API: 
+"\textit{Ticker}" e \textit{"Orderbook"}. 
+O primeiro grupo, trazia informações sobre a cotação no momento da consulta e 
+trazia os seguintes campos:
+
+\begin{itemize}
+  \item Valor atual de venda
+  \item Valor atual de compra
+  \item Último valor negociado
+  \item Menor valor negociado das últimas 24h
+  \item Maior valor negociado nas últimas 24h
+  \item Volume total negociado nas últimas 24h
+\end{itemize}
+
+O segundo grupo, trazia o "livro de ordens", que era a listagem de todas as 
+ordens de compra e venda na corretora, vigentes no momento da consulta. 
+Essa consulta retornava milhares de linhas e para reduzir o espaço de 
+armazenamento, optou-se por resumir as informações antes de salvar no banco de 
+dados. Os dados resumidos traziam as seguintes informações tanto das ordens de 
+compra, quanto das ordens de venda:
+
+\begin{itemize}
+  \item Mínimo
+  \item 1o Quartil
+  \item Mediana
+  \item 3o Quartil
+  \item Máximo
+\end{itemize}
+
+Ao final, o conjunto de dados ficou com as variáveis apresentadas na Tabela 
+\ref{vars}. A variável \textit{Last} será a variável resposta dos modelos, 
+ou seja, a variável que iremos tentar estimar através do modelos a serem
+desenvolvidos.
+
+\input{{tabela_vars.tex}}
+
+\subsection{Análise exploratória}
+
+Com os dados já estruturados e armazenados num banco de dados, o próximo passo
+foi realizar uma análise exploratória no conjunto de dados. 
+
+Como o tempo de resposta da API pode variar, analisou-se os intervalos entre 
+cada consulta efetivamente realizada. Após essa análise, foram realizadas 
+algumas tratativas nos dados para se chegar ao \textit{dataset} final.
+
+\subsection{Modelos}
+
+Neste trabalho foram utilizados os modelos de Regressão Linear, Random Forest e 
+\textit{Multi Layer Perceptron} (MLP), considerando como base de treinamento
+os dados compreendidos entre novembro de 2017 até dezembro de 2019 e para 
+validação os dados entre janeiro e março de 2020.
+
+O modelo MLP form treinado utilizando o pacote Keras \cite{chollet2015}, que 
+cria uma camada para execução do ambiente Tensorflow \cite{tensorflow2015}.
+
+Os modelos de Regressão Linear e Random Forest, foram treinados através do
+framework \textit{Tidymodels} \cite{tidymodels}, utilizando como motor de 
+treinamento os pacotes \textit{glmmet} \cite{glmnet} e \textit{randomForest} 
+\cite{randomforest}
+
 
 \section{Discussão dos resultados}
 

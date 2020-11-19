@@ -12,18 +12,7 @@ executar o arquivo `main.R` para gerar os dados.
 * template-artigo - Todos os arquivos utilizados para 
 escrita do artigo em `Latex`
 
-O Arquivo `config.yml` deve ser salvo localmente na pasta
-principal, com as credenciais para acesso ao banco de dados,
-conforme exemplo:
-
-```
-default:
-  azure:
-    connection: nome_do_banco
-    host: endereco_do_host
-    user: usuario
-    password: senha
-```
+O arquivo `data.RData` está disponível no S3 (s3://tcc-mba-fatec/data.RData)
 
 Deve-se ter instalado o Latex para compilação do artigo,
 conforme [Projeto](https://www.latex-project.org/).
